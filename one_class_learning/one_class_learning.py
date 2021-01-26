@@ -9,6 +9,9 @@ import numpy as np
 import pandas as pd
 import time
 import os
+import sys
+from datetime import datetime
+
 
 # Learning evaluation
 from  sklearn.model_selection import KFold
@@ -27,12 +30,17 @@ from sklearn.metrics import confusion_matrix
 
 # %%
 SEED = 42
-np.random.seed(SEED) #seed for random selections
+
 
 
 
 # %% [markdown]
 # # Functions
+
+def log_error(message): 
+    now = datetime.now()
+    with open('error.log', 'a') as file:
+        file.write(now.strftime("%Y/%m/%d, %H:%M:%S") + message + '\n') 
 
 # %%
 #Split the dataset into train and test data
@@ -41,6 +49,7 @@ np.random.seed(SEED) #seed for random selections
 # number: number of folds in case of type == "cross-validation", or number or examples in case of type == "random"
 def get_indexes(data, split_type, number_trials, number_examples): 
     indexes = []
+    np.random.seed(SEED) #seed for random selections
     if split_type == 'cross-validation': 
         kf = KFold(n_splits=number_trials, shuffle=True, random_state=SEED)
         for ids_train, ids_test in kf.split(data):
@@ -76,6 +85,7 @@ def get_evaluation_metrics(classifier, X_test, y_test, classe, num_labeled_exs, 
   evaluation = {} 
   start_time_classification = time.time()
   predictions = classifier.predict(X_test)
+  scores = classifier.decision_function(X_test)
   elapsed_time_classification = (time.time() - start_time_classification) / 1000
   evaluation['Algorithm'] = classifier.__class__.__name__
   evaluation['Parameters'] = str(classifier.get_params())
@@ -86,11 +96,12 @@ def get_evaluation_metrics(classifier, X_test, y_test, classe, num_labeled_exs, 
   evaluation['Precision'] = precision_score(y_test,predictions)
   evaluation['Recall'] = recall_score(y_test,predictions)
   evaluation['F1'] = f1_score(y_test,predictions)
-  evaluation['ROC_AUC'] = roc_auc_score(y_test,predictions,average=None)
+  evaluation['ROC_AUC'] = roc_auc_score(y_test,scores,average=None)
   evaluation['Building_Time'] = model_building_time
   evaluation['Confusion_Matrix'] = confusion_matrix(y_test,predictions).tolist()
   evaluation['Classification_Time'] = elapsed_time_classification
   evaluation['Memory'] = sys.getsizeof(classifier) / 1024
+  evaluation['Memory'] = 0
   
   return evaluation 
 
@@ -150,7 +161,7 @@ def one_class_learning(X, y, classifier, path_results, split_type='cross-validat
                 result = get_evaluation_metrics(classifier, X_test, y_test, classe, num_labeled_exes, it, model_building_time=0)
                 print(result, '\n')
                 current_results = current_results.append(result,ignore_index=True)
-                current_results.to_csv(config['path_results'], index=False)
+                current_results.to_csv(path_results, index=False)
     
 
 
@@ -172,25 +183,28 @@ def execute_exp(X, y, classifier, config):
     if 'number_trials' not in config: 
         number_trials=10
     else: 
-        number_trials= config['number_trials']
-
-    number_examples = None 
-    if 'number_examples' not in config:
-        number_examples = 10
-    else: 
-        number_examples = config['number_examples']
+        number_trials= config['validation']
 
     split_type = None
-    if 'split_type' not in config: 
+    if 'split_type' not in config['validation']: 
         split_type = 'cross-validation'
-        number_examples=None
     else: 
-        split_type = config['split_type']
+        split_type = config['validation']['split_type']
 
-    one_class_learning(X, y, classifier, path_results, split_type=split_type, number_trials=number_trials, number_examples=number_examples)
+    number_labeled_examples = []
+    if ('number_labeled_examples' not in config['validation']) or split_type == 'cross-validation':
+        number_labeled_examples = [None]
+    else: 
+        number_labeled_examples = config['validation']['number_labeled_examples']
+        
+    for nle in number_labeled_examples: 
+        one_class_learning(X, y, classifier, path_results, split_type=split_type, number_trials=number_trials, number_examples=nle)
+        
 
     print('Done')
 
 
 
 
+
+# %%
