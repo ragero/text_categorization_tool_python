@@ -9,7 +9,7 @@ from sklearn.neighbors import LocalOutlierFactor
 from sklearn.svm import OneClassSVM
 from sklearn.covariance import EllipticEnvelope
 from sklearn.ensemble import IsolationForest
-from Diabolo import Diabolo
+from algorithms.DenseAutoencoder import DenseAutoencoder
 import one_class_learning as ocl
 import pandas as pd
 import numpy as np
@@ -26,7 +26,7 @@ dict_algorithms['LocalOutlierFactor'] = LocalOutlierFactor
 dict_algorithms['OneClassSVM'] = OneClassSVM
 dict_algorithms['EllipticEnvelope'] = EllipticEnvelope
 dict_algorithms['IsolationForest'] = IsolationForest
-dict_algorithms['Diabolo'] = Diabolo
+dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
 
 # %% [markdown]
 # # Functions
@@ -58,12 +58,12 @@ def load_data(path):
     y = data[:,-1]
 
     return X,y
-
+                
 # %% [markdown]
 # # Test Área
 
 # %%
-config = {
+"""config = {
     'path_dataset': '/home/rafael/Downloads/iris.csv',
     'path_results': '/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv',
     'validation': {
@@ -106,12 +106,20 @@ config = {
                 'random_state' : [42]
             }
         },
+        {
+            'name': 'DenseAutoencoder',
+            'parameters': {
+                'encoding_dim': [2],
+                'num_epochs': [200],
+                'threshold': [0.9,0.95,0.99, 0.999],
+            }
+        },
     ]
-}
+}"""
 
 
 # %%
-config = {
+"""config = {
     'path_dataset': '/home/rafael/Downloads/iris.csv',
     'path_results': '/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv',
     'validation': {
@@ -121,35 +129,37 @@ config = {
     },
     'algorithms': [
         {
-            'name': 'Diabolo',
+            'name': 'DenseAutoencoder',
             'parameters': {
-                'input_size' : [4],
-                'threshold': [0.9,0.95],
+                'encoding_dim': [2],
+                'num_epochs': [200],
+                'threshold': [0.9,0.99],
             }
         },
         
     ]
-}
+}"""
 
 
 # %%
-with open('config_example.json','w') as file:
-    json.dump(config, file, indent=3)
+#with open('config_example.json','w') as file:
+#    json.dump(config, file, indent=3)
 
 
 # %%
-path = '/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/one_class_learning/config_example.json'
+#path = '/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/one_class_learning/config_example.json'
+
 
 # %% [markdown]
 # # Main
 
 # %%
 # Comment the first two lines in case of ruuning the notebook
-#if __name__ == '__main__': 
-#    path_json = sys.argv[1]
+if __name__ == '__main__': 
+    path_json = sys.argv[1]
 
-with open(path, 'r') as file: 
-    config = json.load(file)
+    with open(path_json, 'r') as file: 
+        config = json.load(file)
 
 X, y = load_data(config['path_dataset'])
 
@@ -162,17 +172,6 @@ for algorithm in config_algorithms:
         classifier = dict_algorithms[algorithm['name']](**parameters)
         ocl.execute_exp(X,y,classifier,config)
         
-
-
-# %%
-
-
-
-# %%
-
-
-
-# %%
 
 
 

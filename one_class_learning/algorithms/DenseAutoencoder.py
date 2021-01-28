@@ -7,7 +7,7 @@
 import tensorflow as tf
 import numpy as np
 from tensorflow.keras.optimizers import Adam
-from scipy.spatial.distance import cosine
+
 
 # %% [markdown]
 # # Functions
@@ -17,35 +17,32 @@ def sim_cosine(vec1, vec2):
   return 1 - cosine(vec1, vec2)
 
 
-# %%
-def standardization(X):
-    for i in range(len(X)):
-        X[i] = X[i] / X[i].max()
-    return X
-
 # %% [markdown]
-# # Diabolo Class
+# # DenseAutoencoder Class
 
 # %%
-class Diabolo(object):
+class DenseAutoencoder(object):
 
-    def __init__(self, input_size, threshold): 
-        self.input_size = input_size
+    def __init__(self, encoding_dim, num_epochs, threshold): 
         self.threshold = threshold
-        encoding_dim = 2
-        input = tf.keras.Input(shape=(input_size,))
-        encoded = tf.keras.layers.Dense(encoding_dim, activation='relu')(input)
-        decoded = tf.keras.layers.Dense(input_size, activation='sigmoid')(encoded)
-        autoencoder = tf.keras.Model(input, decoded) 
-        autoencoder.compile(optimizer=Adam(learning_rate=0.01), loss='binary_crossentropy')
-
-        self.model = autoencoder
+        self.num_epochs = num_epochs
+        self.encoding_dim = encoding_dim
+        self.model = None 
     
     def get_params(self):
         return{'threshold': self.threshold}
 
-    def fit(self,X,epochs=500, shuffle=True, batch_size=1):
-        self.model.fit(X,X, epochs=epochs, shuffle=shuffle, batch_size=batch_size) 
+    def fit(self,X,epochs=100, shuffle=True, batch_size=1):
+        initializer = tf.keras.initializers.Zeros()
+        input_size = X.shape[1]
+        input = tf.keras.Input(shape=(input_size,))
+        encoded = tf.keras.layers.Dense(self.encoding_dim, activation='relu')(input)
+        decoded = tf.keras.layers.Dense(input_size, activation='sigmoid')(encoded)
+        autoencoder = tf.keras.Model(input, decoded) 
+        autoencoder.compile(optimizer=Adam(learning_rate=0.01), loss='binary_crossentropy')
+        self.model = autoencoder
+        result = self.model.fit(X,X, epochs=self.num_epochs, shuffle=shuffle, batch_size=batch_size, verbose=0) 
+        print('Loss:', result.history['loss'])
 
     def decision_function(self,X): 
         scores = np.zeros(len(X), dtype=np.float32)
@@ -58,7 +55,7 @@ class Diabolo(object):
         predictions = np.zeros(len(X))
         scores = self.decision_function(X)
         for i,score in enumerate(scores): 
-            predictions[i] = 1 if score > self.threshold else 0
+            predictions[i] = 1 if score > self.threshold else -1
         return predictions
 
 

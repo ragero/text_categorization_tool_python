@@ -10,7 +10,9 @@ import pandas as pd
 import time
 import os
 import sys
-from datetime import datetime
+import sys
+sys.path.append('..')
+from utilities.log_errors import log_error
 
 
 # Learning evaluation
@@ -36,11 +38,6 @@ SEED = 42
 
 # %% [markdown]
 # # Functions
-
-def log_error(message): 
-    now = datetime.now()
-    with open('error.log', 'a') as file:
-        file.write(now.strftime("%Y/%m/%d, %H:%M:%S") + message + '\n') 
 
 # %%
 #Split the dataset into train and test data
@@ -86,7 +83,11 @@ def get_evaluation_metrics(classifier, X_test, y_test, classe, num_labeled_exs, 
   start_time_classification = time.time()
   predictions = classifier.predict(X_test)
   scores = classifier.decision_function(X_test)
+  
+  print('Predictions:', predictions)
+  print('Scores:', scores )
   elapsed_time_classification = (time.time() - start_time_classification) / 1000
+
   evaluation['Algorithm'] = classifier.__class__.__name__
   evaluation['Parameters'] = str(classifier.get_params())
   evaluation['Class'] = classe
@@ -101,7 +102,6 @@ def get_evaluation_metrics(classifier, X_test, y_test, classe, num_labeled_exs, 
   evaluation['Confusion_Matrix'] = confusion_matrix(y_test,predictions).tolist()
   evaluation['Classification_Time'] = elapsed_time_classification
   evaluation['Memory'] = sys.getsizeof(classifier) / 1024
-  evaluation['Memory'] = 0
   
   return evaluation 
 
@@ -198,7 +198,10 @@ def execute_exp(X, y, classifier, config):
         number_labeled_examples = config['validation']['number_labeled_examples']
         
     for nle in number_labeled_examples: 
-        one_class_learning(X, y, classifier, path_results, split_type=split_type, number_trials=number_trials, number_examples=nle)
+        try: 
+            one_class_learning(X, y, classifier, path_results, split_type=split_type, number_trials=number_trials, number_examples=nle)
+        except Exception as Erro: 
+            log_error(str(Erro))    
         
 
     print('Done')
