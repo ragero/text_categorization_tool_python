@@ -30,7 +30,7 @@ dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
 
 # %% [markdown]
 # # Functions
-
+                      
 # %%
 def generate_parameters_list(parameters): 
     
@@ -53,12 +53,14 @@ def generate_parameters_list(parameters):
 def load_data(path): 
 
     df = pd.read_csv(path)
-    data = df.to_numpy()
+    """data = df.to_numpy()
     X = np.array(data[:,:-1], dtype=np.float)
-    y = data[:,-1]
+    y = data[:,-1]"""
+    X = df['Text'].to_numpy()
+    y = df['Class'].to_numpy()
+
 
     return X,y
-                
 # %% [markdown]
 # # Test Área
 
@@ -71,6 +73,7 @@ def load_data(path):
         'number_labeled_examples': [1, 5, 10, 20, 30],
         'split_type': 'random',
     },
+    
     'algorithms': [
         {
             'name': 'LocalOutlierFactor',
@@ -114,31 +117,47 @@ def load_data(path):
                 'threshold': [0.9,0.95,0.99, 0.999],
             }
         },
-    ]
+    ],
+    'thresholds' : 
+        {'fixed': [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.85, 0.90, 0.95],
+        'six-sigma' : None}
 }"""
 
 
 # %%
-"""config = {
-    'path_dataset': '/home/rafael/Downloads/iris.csv',
+config = {
+    'path_dataset': '/media/rafael/DadosCompartilhados/Representacoes/Sequence_of_words_CSV/CSTR.csv',
     'path_results': '/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv',
     'validation': {
         'number_trials': 10,
-        'number_labeled_examples': [1, 5, 10, 20, 30],
+        'number_labeled_examples': [20],
         'split_type': 'random',
     },
-    'algorithms': [
+    'preprocessing': [
         {
-            'name': 'DenseAutoencoder',
+            'method': 'TfidfVectorizer',
             'parameters': {
-                'encoding_dim': [2],
-                'num_epochs': [200],
-                'threshold': [0.9,0.99],
+                'min_df' : 5
             }
         },
-        
-    ]
-}"""
+        {
+            'method': 'NormStandardization'
+        }
+    ],
+    'algorithms': [
+        {
+            'algorithm': 'DenseAutoencoder',
+            'parameters': {
+                'encoding_dim': [10],
+                'num_epochs': [200],
+            }
+        }
+    ],
+    'thresholds' : 
+        {'fixed': [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.85, 0.90, 0.95],
+        'six-sigma' : None}
+    
+}
 
 
 # %%
@@ -155,11 +174,11 @@ def load_data(path):
 
 # %%
 # Comment the first two lines in case of ruuning the notebook
-if __name__ == '__main__': 
+"""if __name__ == '__main__': 
     path_json = sys.argv[1]
 
     with open(path_json, 'r') as file: 
-        config = json.load(file)
+        config = json.load(file)"""
 
 X, y = load_data(config['path_dataset'])
 
@@ -169,9 +188,11 @@ for algorithm in config_algorithms:
     parameters_list = generate_parameters_list(parameters)
     for parameters in parameters_list: 
         print(parameters)
-        classifier = dict_algorithms[algorithm['name']](**parameters)
+        classifier = dict_algorithms[algorithm['algorithm']](**parameters)
         ocl.execute_exp(X,y,classifier,config)
         
 
 
 
+
+# %%
