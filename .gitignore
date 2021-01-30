@@ -5,3 +5,4 @@ resultados_processados/
 *.json
 *.vsm
 *.csv
+*__pycache__

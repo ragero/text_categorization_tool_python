@@ -30,7 +30,6 @@ class DenseAutoencoder(object):
     def __init__(self, num_epochs=100, learning_rate=0.01, batch_size=1, layers=[], threshold=0.1): 
         self.num_epochs = num_epochs
         self.learning_rate = learning_rate
-        self.encoding_dim = encoding_dim
         self.batch_size=batch_size
         self.model = None 
         self.layers = layers
