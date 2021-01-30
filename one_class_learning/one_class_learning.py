@@ -228,7 +228,7 @@ def one_class_learning(X, y, classifier, thresholds, preprocessing_pipeline=[], 
                             current_results = process_result(current_results, path_results, classifier, X_test, y_test, '6-sigma', threshold, classe, num_labeled_exes, it, elapsed_time_building)
                 else:
                     current_results = process_result(current_results, path_results, classifier, X_test, y_test, 'None', 'None', classe, num_labeled_exes, it, elapsed_time_building)
-
+                del classifier
 
 'preprocessing'
 # %%
