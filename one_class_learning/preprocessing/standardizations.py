@@ -13,10 +13,11 @@ class NormStandardization(object):
 
     def standardization(self, data):
         for i in range(len(data)):
-            data[i] = data[i] / np.linalg.norm(data[i])
+            norm = np.linalg.norm(data[i])
+            data[i] = (data[i] / norm) if norm > 0 else 0
         return data
 
-class MaxStandardization(object):
+class SumStandardization(object):
 
     def fit(self, data):
         return self.standardization(data)
@@ -29,7 +30,8 @@ class MaxStandardization(object):
 
     def standardization(self, data):
         for i in range(len(data)):
-            data[i] = data[i] / data[i].max()
+            sum = data[i].sum()
+            data[i] = (data[i] / sum) if sum > 0 else 0
         return data
 
 

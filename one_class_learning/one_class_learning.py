@@ -23,10 +23,13 @@ from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import confusion_matrix
+from sklearn.metrics import auc
+from sklearn.metrics import precision_recall_curve
 
 # Preprocessing Algorithms
 from sklearn.feature_extraction.text import TfidfVectorizer
 from preprocessing.standardizations import NormStandardization
+from preprocessing.standardizations import SumStandardization
 
 # %% [markdown]
 # # Definitions
@@ -37,6 +40,7 @@ SEED = 42
 dict_preprocessing_methods = {}
 dict_preprocessing_methods['TfidfVectorizer'] = TfidfVectorizer
 dict_preprocessing_methods['NormStandardization'] = NormStandardization
+dict_preprocessing_methods['SumStandardization'] = SumStandardization
 
 
 # %% [markdown]
@@ -82,7 +86,7 @@ def get_classes_test(y, classe, all_indexes, indexes_train):
 
 
 # %%
-def get_evaluation_metrics(classifier, X_test, y_test, classe, num_labeled_exs, it_number, model_building_time=0):
+def get_evaluation_metrics(classifier, X_test, y_test, threshold_type, threshold_value, classe, num_labeled_exs, it_number, model_building_time=0):
 
     evaluation = {}
     start_time_classification = time.time()
@@ -97,6 +101,8 @@ def get_evaluation_metrics(classifier, X_test, y_test, classe, num_labeled_exs, 
     evaluation['Algorithm'] = classifier.__class__.__name__
     evaluation['Parameters'] = str(classifier.get_params())
     evaluation['Class'] = classe
+    evaluation['Threshold_Type'] = threshold_type
+    evaluation['Threshold_Value'] = threshold_value
     evaluation['Number_Labeled_Examples'] = num_labeled_exs
     evaluation['Iteration'] = it_number
     evaluation['Accuracy'] = accuracy_score(y_test, predictions)
@@ -104,8 +110,7 @@ def get_evaluation_metrics(classifier, X_test, y_test, classe, num_labeled_exs, 
     evaluation['Recall'] = recall_score(y_test, predictions)
     evaluation['F1'] = f1_score(y_test, predictions)
     evaluation['ROC_AUC'] = roc_auc_score(y_test, scores, average=None)
-    evaluation['Confusion_Matrix'] = confusion_matrix(
-        y_test, predictions).tolist()
+    evaluation['Confusion_Matrix'] = confusion_matrix(y_test, predictions).tolist()
     evaluation['Building_Time'] = model_building_time
     evaluation['Classification_Time'] = elapsed_time_classification
     evaluation['Memory'] = sys.getsizeof(classifier) / 1024
@@ -121,6 +126,8 @@ def get_data_frame(path_results):
     else:
         results = pd.DataFrame(columns=['Algorithm',
                                         'Parameters',
+                                        'Threshold_Type',
+                                        'Threshold_Value',
                                         'Class',
                                         'Number_Labeled_Examples',
                                         'Iteration',
@@ -152,9 +159,8 @@ def compute_sig_sigma_thresholds(classifier, X_train):
 # %%
 
 
-def process_result(current_results, path_results, classifier, X_test, y_test, classe, num_labeled_exes, it, model_building_time):
-    result = get_evaluation_metrics(
-        classifier, X_test, y_test, classe, num_labeled_exes, it, model_building_time)
+def process_result(current_results, path_results, classifier, X_test, y_test, threshold_type, threshold_value, classe, num_labeled_exes, it, model_building_time):
+    result = get_evaluation_metrics(classifier, X_test, y_test, threshold_type, threshold_value, classe, num_labeled_exes, it, model_building_time)
     print(result, '\n')
     current_results = current_results.append(result, ignore_index=True)
     current_results.to_csv(path_results, index=False)
@@ -184,8 +190,10 @@ def one_class_learning(X, y, classifier, thresholds, preprocessing_pipeline=[], 
     for classe in classes:
         classe_indexes = np.argwhere(y == classe).reshape(-1)
         for it, indexes_train in enumerate(get_indexes(classe_indexes, split_type, number_trials, number_examples)):
-            X_train, X_test = get_train_test_data(
-                X, all_indexes, indexes_train)
+            X_train, X_test = get_train_test_data(X, all_indexes, indexes_train)
+            y_test = get_classes_test(y, classe, all_indexes, indexes_train)
+            if len(np.unique(y_test)) < 2 or len(y_test) == 0: 
+                continue
             num_labeled_exes = len(X_train)
             if check_exp(current_results, classifier, classe, it, num_labeled_exes):
                 if preprocessing_pipeline != None:
@@ -201,8 +209,8 @@ def one_class_learning(X, y, classifier, thresholds, preprocessing_pipeline=[], 
                             X_test = X_test.todense()
                         except AttributeError:
                             pass
-                y_test = get_classes_test(
-                y, classe, all_indexes, indexes_train)
+                
+                
                 start_time_building = time.time()
                 classifier.fit(X_train)
                 elapsed_time_building = (
@@ -212,17 +220,14 @@ def one_class_learning(X, y, classifier, thresholds, preprocessing_pipeline=[], 
                         for threshold in thresholds['fixed']:
                             classifier.set_threshold(threshold)
                             current_results = process_result(
-                                current_results, path_results, classifier, X_test, y_test, classe, num_labeled_exes, it, elapsed_time_building)
+                                current_results, path_results, classifier, X_test, y_test, 'Fixed', threshold, classe, num_labeled_exes, it, elapsed_time_building)
                     if 'six-sigma' in thresholds:
-                        six_sigma_thresholds = compute_sig_sigma_thresholds(
-                            classifier, X_train)
+                        six_sigma_thresholds = compute_sig_sigma_thresholds(classifier, X_train)
                         for threshold in six_sigma_thresholds:
                             classifier.set_threshold(threshold)
-                            current_results = process_result(
-                                current_results, path_results, classifier, X_test, y_test, classe, num_labeled_exes, it, elapsed_time_building)
+                            current_results = process_result(current_results, path_results, classifier, X_test, y_test, '6-sigma', threshold, classe, num_labeled_exes, it, elapsed_time_building)
                 else:
-                    current_results = process_result(
-                        current_results, path_results, classifier, X_test, y_test, classe, num_labeled_exes, it, elapsed_time_building)
+                    current_results = process_result(current_results, path_results, classifier, X_test, y_test, 'None', 'None', classe, num_labeled_exes, it, elapsed_time_building)
 
 
 'preprocessing'

@@ -114,7 +114,7 @@ def load_data(path):
             'parameters': {
                 'encoding_dim': [2],
                 'num_epochs': [200],
-                'threshold': [0.9,0.95,0.99, 0.999],
+                'learning_rate': [0.01]
             }
         },
     ],
@@ -125,12 +125,12 @@ def load_data(path):
 
 
 # %%
-config = {
+"""config = {
     'path_dataset': '/media/rafael/DadosCompartilhados/Representacoes/Sequence_of_words_CSV/CSTR.csv',
     'path_results': '/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv',
     'validation': {
         'number_trials': 10,
-        'number_labeled_examples': [20],
+        'number_labeled_examples': [1, 5, 10, 20, 30],
         'split_type': 'random',
     },
     'preprocessing': [
@@ -141,28 +141,40 @@ config = {
             }
         },
         {
-            'method': 'NormStandardization'
+            'method': 'SumStandardization'
         }
     ],
     'algorithms': [
         {
-            'algorithm': 'DenseAutoencoder',
+            'name': 'DenseAutoencoder',
             'parameters': {
-                'encoding_dim': [10],
+                'layers': [
+                    [{'num_neurons':2, 'activation': 'relu'}],
+                    [{'num_neurons':6, 'activation': 'relu'}],
+                    [{'num_neurons':12, 'activation': 'relu'}],
+                    [
+                        {'num_neurons':12, 'activation': 'relu'},
+                        {'num_neurons':6, 'activation': 'relu'},
+                        {'num_neurons':12, 'activation': 'relu'}
+                    ]
+                ],
                 'num_epochs': [200],
+                'learning_rate': [0.001]
             }
-        }
+        },
     ],
-    'thresholds' : 
-        {'fixed': [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.85, 0.90, 0.95],
-        'six-sigma' : None}
+    'thresholds' : {
+        'fixed': [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.85, 0.90, 0.95],
+        'six-sigma' : None
+    }
     
-}
+    
+}"""
 
 
 # %%
-#with open('config_example.json','w') as file:
-#    json.dump(config, file, indent=3)
+"""with open('config_exp.json','w') as file:
+   json.dump(config, file, indent=3)"""
 
 
 # %%
@@ -174,22 +186,22 @@ config = {
 
 # %%
 # Comment the first two lines in case of ruuning the notebook
-"""if __name__ == '__main__': 
+if __name__ == '__main__': 
     path_json = sys.argv[1]
 
     with open(path_json, 'r') as file: 
-        config = json.load(file)"""
+        config = json.load(file)
 
-X, y = load_data(config['path_dataset'])
+    X, y = load_data(config['path_dataset'])
 
-config_algorithms = config['algorithms']
-for algorithm in config_algorithms: 
-    parameters = algorithm['parameters']
-    parameters_list = generate_parameters_list(parameters)
-    for parameters in parameters_list: 
-        print(parameters)
-        classifier = dict_algorithms[algorithm['algorithm']](**parameters)
-        ocl.execute_exp(X,y,classifier,config)
+    config_algorithms = config['algorithms']
+    for algorithm in config_algorithms: 
+        parameters = algorithm['parameters']
+        parameters_list = generate_parameters_list(parameters)
+        for parameters in parameters_list: 
+            print(parameters)
+            classifier = dict_algorithms[algorithm['name']](**parameters)
+            ocl.execute_exp(X,y,classifier,config)
         
 
 

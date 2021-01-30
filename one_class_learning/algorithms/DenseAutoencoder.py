@@ -27,11 +27,13 @@ def sim_cosine(vec1, vec2):
 # %%
 class DenseAutoencoder(object):
 
-    def __init__(self, encoding_dim, num_epochs=100, batch_size=1, threshold=0.1): 
+    def __init__(self, num_epochs=100, learning_rate=0.01, batch_size=1, layers=[], threshold=0.1): 
         self.num_epochs = num_epochs
+        self.learning_rate = learning_rate
         self.encoding_dim = encoding_dim
         self.batch_size=batch_size
         self.model = None 
+        self.layers = layers
         self.__threshold = threshold
 
     def valid_threshold(self,threshold): 
@@ -43,21 +45,23 @@ class DenseAutoencoder(object):
 
     def get_params(self):
         return {
-            'enconding_dim': self.encoding_dim,
             'batch_size': self.batch_size,
-            'theshold': self.__threshold
+            'num_epochs': self.num_epochs, 
+            'layers': self.layers
         }
 
     def fit(self,X):
         input_size = X.shape[1]
         input = tf.keras.Input(shape=(input_size,))
-        encoded = tf.keras.layers.Dense(self.encoding_dim, activation='relu')(input)
+        for i,layer in enumerate(self.layers):
+            encoded =  tf.keras.layers.Dense(layer['num_neurons'], activation=layer['activation'])(input) if i == 0 else tf.keras.layers.Dense(layer['num_neurons'], activation=layer['activation'])(encoded)
         decoded = tf.keras.layers.Dense(input_size, activation='sigmoid')(encoded)
         autoencoder = tf.keras.Model(input, decoded) 
         autoencoder.compile(optimizer=Adam(learning_rate=0.01), loss='binary_crossentropy')
         self.model = autoencoder
+        print(self.model.summary())
         result = self.model.fit(X,X, epochs=self.num_epochs, shuffle=True, batch_size=self.batch_size) 
-        print('Loss:', result.history['loss'])
+        print('Loss:', result.history['loss'][-1])
 
     def decision_function(self,X): 
         scores = np.zeros(len(X), dtype=np.float32)
