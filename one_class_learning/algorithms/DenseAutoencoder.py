@@ -20,6 +20,9 @@ def sim_cosine(vec1, vec2):
   sim = 1 - cosine(vec1, vec2)
   return sim if not np.isnan(sim) else 0
 
+# %% [markdown]
+# # Definitions
+tf.config.threading.set_inter_op_parallelism_threads(10)
 
 # %% [markdown]
 # # DenseAutoencoder Class

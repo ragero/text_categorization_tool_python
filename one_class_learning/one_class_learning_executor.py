@@ -73,7 +73,17 @@ def load_data(path):
         'number_labeled_examples': [1, 5, 10, 20, 30],
         'split_type': 'random',
     },
-    
+    'preprocessing': [
+        {
+            'method': 'TfidfVectorizer',
+            'parameters': {
+                'min_df' : 2
+            }
+        },
+        {
+            'method': 'SumStandardization'
+        }
+    ],
     'algorithms': [
         {
             'name': 'LocalOutlierFactor',
@@ -137,7 +147,7 @@ def load_data(path):
         {
             'method': 'TfidfVectorizer',
             'parameters': {
-                'min_df' : 5
+                'min_df' : 2
             }
         },
         {
