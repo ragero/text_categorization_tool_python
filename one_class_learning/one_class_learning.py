@@ -64,8 +64,7 @@ def get_indexes(data, split_type, number_trials, number_examples):
             indexes.append(np.random.choice(data, size=min(
                 number_examples, len(data)), replace=False))
     else:
-        raise ValueError(
-            'Unsuported split type. Please, use split_type = {"cross-validation","random"}.')
+        raise ValueError('Unsuported split type. Please, use split_type = {"cross-validation","random"}.')
     return indexes
 
 
@@ -93,8 +92,8 @@ def get_evaluation_metrics(classifier, X_test, y_test, threshold_type, threshold
     predictions = classifier.predict(X_test)
     scores = classifier.decision_function(X_test)
 
-    print('Predictions:', predictions)
-    print('Scores:', scores)
+    #print('Predictions:', predictions)
+    #print('Scores:', scores)
     elapsed_time_classification = (
         time.time() - start_time_classification) / 1000
 
@@ -106,8 +105,8 @@ def get_evaluation_metrics(classifier, X_test, y_test, threshold_type, threshold
     evaluation['Number_Labeled_Examples'] = num_labeled_exs
     evaluation['Iteration'] = it_number
     evaluation['Accuracy'] = accuracy_score(y_test, predictions)
-    evaluation['Precision'] = precision_score(y_test, predictions)
-    evaluation['Recall'] = recall_score(y_test, predictions)
+    evaluation['Precision'] = precision_score(y_test, predictions, zero_division=0)
+    evaluation['Recall'] = recall_score(y_test, predictions, zero_division=0)
     evaluation['F1'] = f1_score(y_test, predictions)
     evaluation['ROC_AUC'] = roc_auc_score(y_test, scores, average=None)
     evaluation['Confusion_Matrix'] = confusion_matrix(y_test, predictions).tolist()
@@ -219,8 +218,7 @@ def one_class_learning(X, y, classifier, thresholds, preprocessing_pipeline=[], 
                     if 'fixed' in thresholds:
                         for threshold in thresholds['fixed']:
                             classifier.set_threshold(threshold)
-                            current_results = process_result(
-                                current_results, path_results, classifier, X_test, y_test, 'Fixed', threshold, classe, num_labeled_exes, it, elapsed_time_building)
+                            current_results = process_result(current_results, path_results, classifier, X_test, y_test, 'Fixed', threshold, classe, num_labeled_exes, it, elapsed_time_building)
                     if 'six-sigma' in thresholds:
                         six_sigma_thresholds = compute_sig_sigma_thresholds(classifier, X_train)
                         for threshold in six_sigma_thresholds:
@@ -246,7 +244,7 @@ def execute_exp(X, y, classifier, config):
     if 'path_dataset' not in config:
         raise ValueError('Config file must be a "path_dataset" entry')
     if 'algorithms' not in config:
-        raise ValueError('Config file must be a "algorithm" entry')
+        raise ValueError('Config file must be a "algorithms" entry')
     if len(config['algorithms']) == 0:
         raise ValueError('At least one algorhtm should be specified')
 

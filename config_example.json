@@ -1,0 +1,29 @@
+{
+   "path_dataset": "/home/rafael/Downloads/iris.csv",
+   "path_results": "/home/rafael/\u00c1rea de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv",
+   "validation": {
+      "number_trials": 10,
+      "number_labeled_examples": [
+         1,
+         5,
+         10,
+         20,
+         30
+      ],
+      "split_type": "random"
+   },
+   "algorithms": [
+      {
+         "name": "Diabolo",
+         "parameters": {
+            "input_size": [
+               4
+            ],
+            "threshold": [
+               0.9,
+               0.95
+            ]
+         }
+      }
+   ]
+}

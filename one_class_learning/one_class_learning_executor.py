@@ -13,9 +13,13 @@ from algorithms.DenseAutoencoder import DenseAutoencoder
 import one_class_learning as ocl
 import pandas as pd
 import numpy as np
-import sys
 import json
 import time
+
+import sys
+sys.path.append(path.join(path.dirname(__file__), '..'))
+from utilities.generate_parameters_list import generate_parameters_list
+from utilities.data_loader import loaders
 
 # %% [markdown]
 # # Definitions
@@ -30,37 +34,10 @@ dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
 
 # %% [markdown]
 # # Functions
-                      
-# %%
-def generate_parameters_list(parameters): 
-    
-  all_parameters = []
-  for values in parameters.values(): 
-    all_parameters.append(values)
-  all_permutations = []
-  for combination in itertools.product(*all_parameters):
-    all_permutations.append(combination)
-  parameters_list = []
-  for combination in all_permutations: 
-    param = {}
-    for i, key in enumerate(parameters.keys()): 
-      param[key] = combination[i]
-    parameters_list.append(param)
-  return parameters_list
-    
+
 
 # %%
-def load_data(path): 
 
-    df = pd.read_csv(path)
-    """data = df.to_numpy()
-    X = np.array(data[:,:-1], dtype=np.float)
-    y = data[:,-1]"""
-    X = df['Text'].to_numpy()
-    y = df['Class'].to_numpy()
-
-
-    return X,y
 # %% [markdown]
 # # Test Área
 
@@ -202,7 +179,7 @@ if __name__ == '__main__':
     with open(path_json, 'r') as file: 
         config = json.load(file)
 
-    X, y = load_data(config['path_dataset'])
+    X, y = loaders['csv'](config['path_dataset'],'text','class')
 
     config_algorithms = config['algorithms']
     for algorithm in config_algorithms: 

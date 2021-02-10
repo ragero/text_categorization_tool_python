@@ -1,0 +1,32 @@
+{
+   "path_dataset": "/home/rafael/Downloads/iris.csv",
+   "path_results": "/home/rafael/\u00c1rea de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv",
+   "validation": {
+      "number_trials": 10,
+      "number_labeled_examples": [
+         20,
+         30
+      ],
+      "split_type": "random"
+   },
+   "algorithms": [
+      {
+         "name": "LocalOutlierFactor",
+         "parameters": {
+            "n_neighbors": [
+               1,
+               5
+            ],
+            "metric": [
+               "cosine",
+            ],
+            "novelty": [
+               true
+            ],
+            "n_jobs": [
+               4
+            ]
+         }
+      }
+   ]
+}

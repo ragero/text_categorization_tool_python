@@ -2,7 +2,6 @@ saida/
 teste/
 resultados_processados/
 .ipynb_checkpoints/
-*.json
 *.vsm
 *.csv
 *__pycache__

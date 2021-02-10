@@ -1,0 +1,103 @@
+{
+    "csvs_diretory": "/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/teste",
+    "output_directory": "/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/saida",
+    "text_column": "letras",
+    "class_column": "genero",
+    "pre-processing": true,
+    "pre-processing_steps": {
+        "language": "en",
+        "remove_stopwords": true,
+        "remove_punctuation": true,
+        "convert_numbers": true,
+        "remove_numbers": true,
+        "simplification": true,
+        "simplification_type": "lemmatization",
+        "lower_case": true
+    },
+    "sparse_representation": {
+        "use": false,
+        "n-grams": [
+            1
+        ],
+        "term-weights": [
+            "tf",
+            "tf-idf"
+        ]
+    },
+    "low-dimension_representation": {
+        "use": true,
+        "types": [
+            "doc2vec",
+            "word2vec"
+        ],
+        "doc2vec_config": {
+            "use": false,
+            "models": [
+                "dm",
+                "dbow",
+                "both"
+            ],
+            "methods": [
+                "average",
+                "concat"
+            ],
+            "num_threads": 4,
+            "alpha": 0.025,
+            "min_alpha": 0.001,
+            "num_max_epochs": [
+                1,
+                3,
+                100,
+                1000
+            ],
+            "min_count": 1,
+            "window_sizes": [
+                5,
+                8,
+                10
+            ],
+            "num_dimensions": [
+                25,
+                50,
+                100,
+                500,
+                1000
+            ]
+        },
+        "word2vec_config": {
+            "use": true,
+            "models": [
+                "sg",
+                "cbow",
+                "fasttext"
+            ],
+            "methods": [
+                "average",
+                "sum"
+            ],
+            "num_threads": 4,
+            "alpha": 0.025,
+            "min_alpha": 0.0001,
+            "num_max_epochs": [
+                1,
+                3,
+                5,
+                50
+            ],
+            "min_count": 5,
+            "window_sizes": [
+                5,
+                8,
+                10
+            ],
+            "num_dimensions": [
+                25,
+                50,
+                100,
+                300
+            ]
+        }
+    },
+    "save-arff": true,
+    "save-binary": false
+}

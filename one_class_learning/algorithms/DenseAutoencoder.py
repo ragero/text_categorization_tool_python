@@ -61,8 +61,8 @@ class DenseAutoencoder(object):
         autoencoder = tf.keras.Model(input, decoded) 
         autoencoder.compile(optimizer=Adam(learning_rate=0.01), loss='binary_crossentropy')
         self.model = autoencoder
-        print(self.model.summary())
-        result = self.model.fit(X,X, epochs=self.num_epochs, shuffle=True, batch_size=self.batch_size) 
+        #print(self.model.summary())
+        result = self.model.fit(X,X, epochs=self.num_epochs, shuffle=True, batch_size=self.batch_size, verbose=0) 
         print('Loss:', result.history['loss'][-1])
 
     def decision_function(self,X): 
