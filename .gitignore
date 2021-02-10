@@ -4,4 +4,4 @@ resultados_processados/
 .ipynb_checkpoints/
 *.vsm
 *.csv
-*__pycache__
+**/__pycache__

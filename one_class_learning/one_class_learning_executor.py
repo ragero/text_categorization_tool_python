@@ -139,20 +139,23 @@ dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
     ],
     'algorithms': [
         {
-            'name': 'IsolationForest',
+            'name': 'DenseAutoencoder',
             'parameters': {
-                'n_estimators' : [10,30,50,70,90],
-                'n_jobs': [4],
-                'random_state' : [42]
+                'encoding_dim': [2],
+                'num_epochs': [200],
+                'learning_rate': [0.01]
             }
         },
     ],
+    'thresholds' : 
+        {'fixed': [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.85, 0.90, 0.95],
+        'six-sigma' : None}
     
 }"""
 
 
 # %%
-"""with open('config_example_isolation_forest.json','w') as file:
+"""with open('config_example_dense_autoencoder.json','w') as file:
    json.dump(config, file, indent=3)"""
 
 
