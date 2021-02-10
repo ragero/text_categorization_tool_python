@@ -1,0 +1,70 @@
+{
+   "path_dataset": "/media/rafael/DadosCompartilhados/Representacoes/Sequence_of_words_CSV/CSTR.csv",
+   "loader": {
+      "type": "csv",
+      "text_column": "Text",
+      "class_column": "Class"
+   },
+   "path_results": "/home/rafael/\u00c1rea de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv",
+   "validation": {
+      "number_trials": 10,
+      "number_labeled_examples": [
+         1,
+         5,
+         10,
+         20,
+         30
+      ],
+      "split_type": "random"
+   },
+   "preprocessing": [
+      {
+         "method": "TfidfVectorizer",
+         "parameters": {
+            "min_df": 2
+         }
+      },
+      {
+         "method": "NormStandardization"
+      }
+   ],
+   "algorithms": [
+      {
+         "name": "OneClassSVM",
+         "parameters": {
+            "nu": [
+               0.05,
+               0.1,
+               0.15,
+               0.2,
+               0.25,
+               0.3,
+               0.35,
+               0.4,
+               0.45,
+               0.5,
+               0.55,
+               0.6,
+               0.65,
+               0.7,
+               0.75,
+               0.8,
+               0.85,
+               0.9,
+               0.95
+            ],
+            "gamma": [
+               "scale",
+               "auto"
+            ],
+            "kernel": [
+               "linear",
+               "rbf"
+            ],
+            "max_iter": [
+               100
+            ]
+         }
+      }
+   ]
+}

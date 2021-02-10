@@ -176,8 +176,7 @@ def execute_exp(X, y, classifier, config):
      for preprocessing in config['preprocessing']:
             preprocessing_method = preprocessors[preprocessing['method']]
             parameters_method = preprocessing['parameters'] if 'parameters' in preprocessing else None
-            preprocessing_pipeline.append(preprocessing_method(
-                **parameters_method) if parameters_method != None else preprocessing_method())
+            preprocessing_pipeline.append(preprocessing_method(**parameters_method) if parameters_method != None else preprocessing_method())
 
   #supervised_learning(X, y, classifier, preprocessing_pipeline, path_results, num_folds)
   try:

@@ -15,6 +15,7 @@ import pandas as pd
 import numpy as np
 import json
 import time
+from os import path
 
 import sys
 sys.path.append(path.join(path.dirname(__file__), '..'))
@@ -114,6 +115,11 @@ dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
 # %%
 """config = {
     'path_dataset': '/media/rafael/DadosCompartilhados/Representacoes/Sequence_of_words_CSV/CSTR.csv',
+    'loader': {
+        'type': 'csv',
+        'text_column': 'Text',
+        'class_column': 'Class'
+    },
     'path_results': '/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv',
     'validation': {
         'number_trials': 10,
@@ -128,39 +134,25 @@ dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
             }
         },
         {
-            'method': 'SumStandardization'
+            'method': 'NormStandardization'
         }
     ],
     'algorithms': [
         {
-            'name': 'DenseAutoencoder',
+            'name': 'IsolationForest',
             'parameters': {
-                'layers': [
-                    [{'num_neurons':2, 'activation': 'relu'}],
-                    [{'num_neurons':6, 'activation': 'relu'}],
-                    [{'num_neurons':12, 'activation': 'relu'}],
-                    [
-                        {'num_neurons':12, 'activation': 'relu'},
-                        {'num_neurons':6, 'activation': 'relu'},
-                        {'num_neurons':12, 'activation': 'relu'}
-                    ]
-                ],
-                'num_epochs': [200],
-                'learning_rate': [0.001]
+                'n_estimators' : [10,30,50,70,90],
+                'n_jobs': [4],
+                'random_state' : [42]
             }
         },
     ],
-    'thresholds' : {
-        'fixed': [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.85, 0.90, 0.95],
-        'six-sigma' : None
-    }
-    
     
 }"""
 
 
 # %%
-"""with open('config_exp.json','w') as file:
+"""with open('config_example_isolation_forest.json','w') as file:
    json.dump(config, file, indent=3)"""
 
 
@@ -179,7 +171,16 @@ if __name__ == '__main__':
     with open(path_json, 'r') as file: 
         config = json.load(file)
 
-    X, y = loaders['csv'](config['path_dataset'],'text','class')
+    X, y = (None, None)
+    if 'loader' not in config: 
+        raise ValueError('Cofig file must hava a loader entry')
+    else: 
+        loader_type = config['loader']['type']
+        if loader_type == 'csv':
+            X, y = loaders['csv'](config['path_dataset'],config['loader']['text_column'],config['loader']['class_column'])
+
+    if (X is None) or (y is None): 
+        raise ValueError('X or y must not be None')
 
     config_algorithms = config['algorithms']
     for algorithm in config_algorithms: 
@@ -190,8 +191,3 @@ if __name__ == '__main__':
             classifier = dict_algorithms[algorithm['name']](**parameters)
             ocl.execute_exp(X,y,classifier,config)
         
-
-
-
-
-# %%

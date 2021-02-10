@@ -11,8 +11,8 @@ import pandas as pd
 
 def load_csv(path, text_column, class_column): 
     df = pd.read_csv(path)
-    X = df[text_column]
-    y = df[class_column]
+    X = df[text_column].to_numpy()
+    y = df[class_column].to_numpy()
     return X, y 
 
 loaders = {}

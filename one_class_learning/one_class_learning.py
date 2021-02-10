@@ -8,11 +8,13 @@
 import numpy as np
 import pandas as pd
 import time
-import os
+from os import path
+
 import sys
-import sys
-# sys.path.append('..')
-#from utilities.log_errors import log_error
+sys.path.append(path.join(path.dirname(__file__), '..'))
+from preprocessing.preprocessing import preprocessors
+from utilities.log_error import log_error
+
 
 
 # Learning evaluation
@@ -120,7 +122,7 @@ def get_evaluation_metrics(classifier, X_test, y_test, threshold_type, threshold
 # %%
 def get_data_frame(path_results):
     results = None
-    if (os.path.exists(path_results)):
+    if (path.exists(path_results)):
         results = pd.read_csv(path_results)
     else:
         results = pd.DataFrame(columns=['Algorithm',
@@ -149,10 +151,11 @@ def compute_sig_sigma_thresholds(classifier, X_train):
     mean = scores.mean()
     std = scores.std()
     for i in range(-3, 4):
-        threshold = mean + i*std
-        threshold = min(1, threshold)
-        threshold = max(0, threshold)
-        thresholds.append(threshold)
+        threshold_value = mean + i*std
+        threshold_value = min(1, threshold_value)
+        threshold_value = max(0, threshold_value)
+        threshold_desc = f'({i}*mean) + std'
+        thresholds.append((threshold_value, threshold_desc))
     return thresholds
 
 # %%
@@ -222,8 +225,8 @@ def one_class_learning(X, y, classifier, thresholds, preprocessing_pipeline=[], 
                     if 'six-sigma' in thresholds:
                         six_sigma_thresholds = compute_sig_sigma_thresholds(classifier, X_train)
                         for threshold in six_sigma_thresholds:
-                            classifier.set_threshold(threshold)
-                            current_results = process_result(current_results, path_results, classifier, X_test, y_test, '6-sigma', threshold, classe, num_labeled_exes, it, elapsed_time_building)
+                            classifier.set_threshold(threshold[0])
+                            current_results = process_result(current_results, path_results, classifier, X_test, y_test, '6-sigma', threshold[1], classe, num_labeled_exes, it, elapsed_time_building)
                 else:
                     current_results = process_result(current_results, path_results, classifier, X_test, y_test, 'None', 'None', classe, num_labeled_exes, it, elapsed_time_building)
                 
@@ -284,7 +287,7 @@ def execute_exp(X, y, classifier, config):
         try:
             one_class_learning(X, y, classifier, thresholds, preprocessing_pipeline, path_results,split_type=split_type, number_trials=number_trials, number_examples=nle)
         except Exception as Erro:
-            log_error(str(Erro))
+            log_error('error.log',str(Erro))
 
     print('Done')
 
