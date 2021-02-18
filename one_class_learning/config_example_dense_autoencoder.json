@@ -32,8 +32,25 @@
           {
                "name": "DenseAutoencoder",
                "parameters": {
-                    "encoding_dim": [
-                         2
+                    "layers": [
+                         [
+                              {
+                                   "num_neurons": 2,
+                                   "activation": "relu"
+                              }
+                         ],
+                         [
+                              {
+                                   "num_neurons": 6,
+                                   "activation": "relu"
+                              }
+                         ],
+                         [
+                              {
+                                   "num_neurons": 12,
+                                   "activation": "relu"
+                              }
+                         ]
                     ],
                     "num_epochs": [
                          200

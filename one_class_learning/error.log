@@ -16,3 +16,4 @@
 2021/02/10, 17:39:18Expected n_neighbors <= n_samples,  but n_samples = 1, n_neighbors = 2
 2021/02/10, 17:40:31Expected n_neighbors <= n_samples,  but n_samples = 1, n_neighbors = 2
 2021/02/10, 17:41:45Expected n_neighbors <= n_samples,  but n_samples = 1, n_neighbors = 2
+2021/02/12, 19:22:54Expected n_neighbors <= n_samples,  but n_samples = 1, n_neighbors = 2

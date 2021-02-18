@@ -15,7 +15,7 @@
          20,
          30
       ],
-      "split_type": "random"
+      "split_type": "cross-validation"
    },
    "preprocessing": [
       {
@@ -23,9 +23,6 @@
          "parameters": {
             "min_df": 2
          }
-      },
-      {
-         "method": "NormStandardization"
       }
    ],
    "algorithms": [

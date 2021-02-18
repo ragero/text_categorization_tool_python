@@ -13,14 +13,6 @@ from tensorflow.keras.optimizers import Adam
 from scipy.spatial.distance import cosine
 
 # %% [markdown]
-# # Definitions
-layers = {}
-layers['dense'] = tf.keras.layers.Dense 
-layers['dropout'] = tf.keras.layers.Dropout
-layers['linear'] = tf.keras.layers.Dropout
-
-
-# %% [markdown]
 # # Functions
 
 # %%
@@ -38,13 +30,12 @@ tf.config.threading.set_inter_op_parallelism_threads(10)
 # %%
 class DenseAutoencoder(object):
 
-    def __init__(self, num_epochs=100, learning_rate=0.01, batch_size=1, layers=[], loss='binary-crossentropy', threshold=0.1): 
+    def __init__(self, num_epochs=100, learning_rate=0.01, batch_size=1, layers=[], threshold=0.1): 
         self.num_epochs = num_epochs
         self.learning_rate = learning_rate
         self.batch_size=batch_size
         self.model = None 
         self.layers = layers
-        self.loss = loss
         self.__threshold = threshold
 
     def valid_threshold(self,threshold): 
@@ -64,18 +55,14 @@ class DenseAutoencoder(object):
     def fit(self,X):
         input_size = X.shape[1]
         input = tf.keras.Input(shape=(input_size,))
-        for i,layer in enumerate(self.layers['hidden']):
-            current_layer = layer.copy()
-            layer_type = current_layer['type']
-            layer_params = current_layer
-            del layer_params['type']
-            encoded =  layers[layer_type](**layer_params)(input) if i == 0 else layers[layer_type](**layer_params)(encoded)
-        output = tf.keras.layers.Dense(input_size, activation=self.layers['output']['activation'])(encoded)
-        autoencoder = tf.keras.Model(input, output) 
-        autoencoder.compile(optimizer=Adam(learning_rate=0.01), loss=self.loss)
+        for i,layer in enumerate(self.layers):
+            encoded =  tf.keras.layers.Dense(layer['num_neurons'], activation=layer['activation'])(input) if i == 0 else tf.keras.layers.Dense(layer['num_neurons'], activation=layer['activation'])(encoded)
+        decoded = tf.keras.layers.Dense(input_size, activation='linear')(encoded)
+        autoencoder = tf.keras.Model(input, decoded) 
+        autoencoder.compile(optimizer=Adam(learning_rate=0.01), loss='mse')
         self.model = autoencoder
-        print(self.model.summary())
-        result = self.model.fit(X,X, epochs=self.num_epochs, shuffle=True, batch_size=self.batch_size, verbose=1) 
+        #print(self.model.summary())
+        result = self.model.fit(X,X, epochs=self.num_epochs, shuffle=True, batch_size=self.batch_size, verbose=0) 
         print('Loss:', result.history['loss'][-1])
 
     def decision_function(self,X): 

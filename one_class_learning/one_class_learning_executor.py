@@ -4,6 +4,7 @@
 # # Imports
 
 # %%
+
 import itertools
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.svm import OneClassSVM
@@ -19,8 +20,8 @@ from os import path
 
 import sys
 sys.path.append(path.join(path.dirname(__file__), '..'))
-from utilities.generate_parameters_list import generate_parameters_list
 from utilities.data_loader import loaders
+from utilities.generate_parameters_list import generate_parameters_list
 
 # %% [markdown]
 # # Definitions
@@ -106,7 +107,7 @@ dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
             }
         },
     ],
-    'thresholds' : 
+    'thresholds' :
         {'fixed': [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.85, 0.90, 0.95],
         'six-sigma' : None}
 }"""
@@ -114,11 +115,9 @@ dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
 
 # %%
 """config = {
-    'path_dataset': '/media/rafael/DadosCompartilhados/Representacoes/Sequence_of_words_CSV/CSTR.csv',
+    'path_dataset': '/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/teste/CSTR_Doc2Vec_model=dm_method=average_dim_size=100_num_max_epochs=1000_window_size=5_num_threads=4_min_count=1_alpha=0.025_min_alpha=0.001.arff',
     'loader': {
-        'type': 'csv',
-        'text_column': 'Text',
-        'class_column': 'Class'
+        'type': 'arff',
     },
     'path_results': '/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv',
     'validation': {
@@ -126,41 +125,51 @@ dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
         'number_labeled_examples': [1, 5, 10, 20, 30],
         'split_type': 'random',
     },
-    'preprocessing': [
-        {
-            'method': 'TfidfVectorizer',
-            'parameters': {
-                'min_df' : 2
-            }
-        },
-        {
-            'method': 'NormStandardization'
-        }
-    ],
+
     'algorithms': [
         {
             'name': 'DenseAutoencoder',
             'parameters': {
-                'encoding_dim': [2],
+                "layers": [
+                    {
+                        "hidden":
+                            [
+                                {
+                                    "type": "dense",
+                                    "units": 6,
+                                    "activation": "tanh"
+                                },
+                                {
+                                    "type": "dropout",
+                                    "rate": 0.5
+                                }
+                            ],
+                        "output": 
+                            {
+                                "activation": 'linear'
+                            }
+                    }
+                ],
                 'num_epochs': [200],
-                'learning_rate': [0.01]
+                'learning_rate': [0.01],
+                'loss' : ["mse"]
             }
         },
     ],
-    'thresholds' : 
+    'thresholds':
         {'fixed': [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.85, 0.90, 0.95],
-        'six-sigma' : None}
-    
+        'six-sigma': None}
+
 }"""
 
 
 # %%
-"""with open('config_example_dense_autoencoder.json','w') as file:
+"""with open('config_example_linear_dense_autoencoder.json','w') as file:
    json.dump(config, file, indent=3)"""
 
 
 # %%
-#path = '/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/one_class_learning/config_example.json'
+# path = '/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/one_class_learning/config_example.json'
 
 
 # %% [markdown]
@@ -168,29 +177,26 @@ dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
 
 # %%
 # Comment the first two lines in case of ruuning the notebook
-if __name__ == '__main__': 
+if __name__ == '__main__':
     path_json = sys.argv[1]
 
-    with open(path_json, 'r') as file: 
+    with open(path_json, 'r') as file:
         config = json.load(file)
 
     X, y = (None, None)
-    if 'loader' not in config: 
-        raise ValueError('Cofig file must hava a loader entry')
-    else: 
-        loader_type = config['loader']['type']
-        if loader_type == 'csv':
-            X, y = loaders['csv'](config['path_dataset'],config['loader']['text_column'],config['loader']['class_column'])
+    loader_type = config['loader']['type']
+    loader_params = config['loader']
+    del loader_params['type']
+    X, y = loaders[loader_type](config['path_dataset'],**loader_params)
 
-    if (X is None) or (y is None): 
+    if (X is None) or (y is None):
         raise ValueError('X or y must not be None')
 
     config_algorithms = config['algorithms']
-    for algorithm in config_algorithms: 
+    for algorithm in config_algorithms:
         parameters = algorithm['parameters']
         parameters_list = generate_parameters_list(parameters)
-        for parameters in parameters_list: 
+        for parameters in parameters_list:
             print(parameters)
             classifier = dict_algorithms[algorithm['name']](**parameters)
-            ocl.execute_exp(X,y,classifier,config)
-        
+            ocl.execute_exp(X, y, classifier, config)
