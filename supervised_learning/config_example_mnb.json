@@ -5,7 +5,7 @@
           "text_column": "Text",
           "class_column": "Class"
      },
-     "path_results": "/home/rafael/\u00c1rea de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv",
+     "path_results": "/home/rafael/\u00c1rea de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste_mnb.csv",
      "validation": {
           "number_folds": 10
      },

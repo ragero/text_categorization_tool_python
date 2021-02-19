@@ -31,39 +31,40 @@ import supervised_learning as sl
 # # Test Area
 
 """config = {
-    'path_dataset': '/media/rafael/DadosCompartilhados/Representacoes/Sequence_of_words_CSV/CSTR.csv',
+    'path_dataset': '/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/teste/CSTR_sparse.arff',
     'loader': {
-        'type': 'csv',
-        'text_column': 'Text',
-        'class_column': 'Class'
+        'type': 'arff',
+        'sparse': False,
+        'class_att': 'class_atr',
+        'label_encoder': True
     },
     'path_results': '/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv',
     'validation': {
         'number_folds': 10,
     },
-    'preprocessing': [
-        {
-            'method': 'TfidfVectorizer',
-            'parameters': {
-                'min_df' : 2
-            }
-        }
-    ],
-    'algorithms': [
-        {
-            'name': 'DecisionTreeClassifier',
-            'parameters': {
-                'criterion': ['entropy'],
-                'max_depth': [5, 10, None],
-                'ccp_alpha': [0,1,10]
-            }
-        },
-    ],
-    
-    
+    "algorithms": [
+          {
+               "name": "LogisticRegression",
+               "parameters": {
+                    "C": [
+                         0.01,
+                         0.1,
+                         1,
+                         10
+                    ],
+                    "solver": [
+                         "saga"
+                    ],
+                    "n_jobs": [
+                         4
+                    ]
+               }
+          }
+     ]
+   
 }"""
 # %%
-"""with open('config_example_dt.json','w') as file:
+"""with open('config_example_lr_arff_sparse_loader.json','w') as file:
    json.dump(config, file, indent=5)"""
 
 # %%
@@ -78,8 +79,9 @@ if __name__ == '__main__':
         raise ValueError('Cofig file must hava a loader entry')
     else: 
         loader_type = config['loader']['type']
-        if loader_type == 'csv':
-            X, y = loaders['csv'](config['path_dataset'],config['loader']['text_column'],config['loader']['class_column'])
+        loader_params = config['loader']
+        del loader_params['type']
+        X, y = loaders[loader_type](config['path_dataset'],**loader_params)
 
     if (X is None) or (y is None): 
         raise ValueError('X or y must not be None')

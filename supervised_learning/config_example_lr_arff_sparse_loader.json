@@ -1,0 +1,31 @@
+{
+     "path_dataset": "/home/rafael/\u00c1rea de Trabalho/Projetos/TextCategorizationToolPython/teste/CSTR_sparse.arff",
+     "loader": {
+          "type": "arff",
+          "sparse": false,
+          "class_att": "class_atr"
+     },
+     "path_results": "/home/rafael/\u00c1rea de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv",
+     "validation": {
+          "number_folds": 10
+     },
+     "algorithms": [
+          {
+               "name": "LogisticRegression",
+               "parameters": {
+                    "C": [
+                         0.01,
+                         0.1,
+                         1,
+                         10
+                    ],
+                    "solver": [
+                         "saga"
+                    ],
+                    "n_jobs": [
+                         4
+                    ]
+               }
+          }
+     ]
+}
