@@ -115,56 +115,127 @@ dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
 
 # %%
 """config = {
-    'path_dataset': '/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/teste/CSTR_Doc2Vec_model=dm_method=average_dim_size=100_num_max_epochs=1000_window_size=5_num_threads=4_min_count=1_alpha=0.025_min_alpha=0.001.arff',
-    'loader': {
-        'type': 'arff',
-    },
-    'path_results': '/home/rafael/Área de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv',
-    'validation': {
-        'number_trials': 10,
-        'number_labeled_examples': [1, 5, 10, 20, 30],
-        'split_type': 'random',
-    },
-
-    'algorithms': [
-        {
-            'name': 'DenseAutoencoder',
-            'parameters': {
-                "layers": [
-                    {
-                        "hidden":
-                            [
-                                {
-                                    "type": "dense",
-                                    "units": 6,
-                                    "activation": "tanh"
-                                },
-                                {
-                                    "type": "dropout",
-                                    "rate": 0.5
-                                }
-                            ],
-                        "output": 
+     "path_dataset": "/media/rafael/DadosCompartilhados/Representacoes/FakeNews/baseFacom_filter_nonsparsetosparse.arff",
+     "loader": {
+          "type": "arff",
+          "sparse": False,
+          "class_att": "class_atr"
+     },
+     "path_results": "/home/rafael/\u00c1rea de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv",
+     "validation": {
+          "number_trials": 10,
+          "number_labeled_examples": [
+               1,
+               5,
+               10,
+               20,
+               30
+          ],
+          "split_type": "random"
+     },
+     "preprocessing": [
+          {
+               "method": "NormStandardization"
+          }
+     ],
+     "algorithms": [
+          {
+               "name": "DenseAutoencoder",
+               "parameters": {
+                    "layers": [
+                         
                             {
-                                "activation": 'linear'
-                            }
-                    }
-                ],
-                'num_epochs': [200],
-                'learning_rate': [0.01],
-                'loss' : ["mse"]
-            }
-        },
-    ],
-    'thresholds':
-        {'fixed': [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.85, 0.90, 0.95],
-        'six-sigma': None}
-
+                                "hidden": [
+                                   {
+                                      "type": "dense",
+                                      "units": 2,
+                                      "activation": "relu"
+                                   },
+                                   {
+                                      "type": "dropout",
+                                      "rate": 0.5
+                                   }
+                                ],
+                                "output": {
+                                   "activation": "sigmoid"
+                                }
+                             }
+                         ,
+                         
+                            {
+                                "hidden": [
+                                   {
+                                      "type": "dense",
+                                      "units": 6,
+                                      "activation": "relu"
+                                   },
+                                   {
+                                      "type": "dropout",
+                                      "rate": 0.5
+                                   }
+                                ],
+                                "output": {
+                                   "activation": "sigmoid"
+                                }
+                             }
+                         ,
+                         
+                            {
+                                "hidden": [
+                                   {
+                                      "type": "dense",
+                                      "units": 12,
+                                      "activation": "relu"
+                                   },
+                                   {
+                                      "type": "dropout",
+                                      "rate": 0.5
+                                   }
+                                ],
+                                "output": {
+                                   "activation": "sigmoid"
+                                }
+                             }
+                         
+                    ],
+                    "num_epochs": [
+                         200
+                    ],
+                    "learning_rate": [
+                         0.01
+                    ],
+                    "loss": ["binary_crossentropy"]
+               }
+          }
+     ],
+     "thresholds": {
+          "fixed": [
+               0.05,
+               0.1,
+               0.15,
+               0.2,
+               0.25,
+               0.3,
+               0.35,
+               0.4,
+               0.45,
+               0.5,
+               0.55,
+               0.6,
+               0.65,
+               0.7,
+               0.75,
+               0.85,
+               0.9,
+               0.95
+          ],
+          "six-sigma": None
+     }
 }"""
 
 
 # %%
-"""with open('config_example_linear_dense_autoencoder.json','w') as file:
+"""with open('./configs/config_example_linear_dense_autoencoder_arff_sparse.json','w') as file:
    json.dump(config, file, indent=3)"""
 
 

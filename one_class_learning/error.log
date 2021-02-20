@@ -23,3 +23,16 @@
 2021/02/19, 10:06:26Expected n_neighbors <= n_samples,  but n_samples = 1, n_neighbors = 2
 2021/02/19, 10:07:32Expected n_neighbors <= n_samples,  but n_samples = 1, n_neighbors = 2
 2021/02/19, 10:08:40Expected n_neighbors <= n_samples,  but n_samples = 1, n_neighbors = 2
+2021/02/19, 12:29:04Expected n_neighbors <= n_samples,  but n_samples = 1, n_neighbors = 2
+2021/02/20, 11:45:31list indices must be integers or slices, not str
+2021/02/20, 11:45:49list indices must be integers or slices, not str
+2021/02/20, 11:45:57list indices must be integers or slices, not str
+2021/02/20, 11:46:11list indices must be integers or slices, not str
+2021/02/20, 11:46:13list indices must be integers or slices, not str
+2021/02/20, 11:46:15list indices must be integers or slices, not str
+2021/02/20, 11:46:18list indices must be integers or slices, not str
+2021/02/20, 11:48:47list indices must be integers or slices, not str
+2021/02/20, 11:49:10list indices must be integers or slices, not str
+2021/02/20, 11:49:47list indices must be integers or slices, not str
+2021/02/20, 11:50:14list indices must be integers or slices, not str
+2021/02/20, 11:51:07list indices must be integers or slices, not str

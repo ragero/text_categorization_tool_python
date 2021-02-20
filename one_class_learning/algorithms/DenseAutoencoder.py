@@ -75,7 +75,7 @@ class DenseAutoencoder(object):
         autoencoder.compile(optimizer=Adam(learning_rate=0.01), loss=self.loss)
         self.model = autoencoder
         print(self.model.summary())
-        result = self.model.fit(X,X, epochs=self.num_epochs, shuffle=True, batch_size=self.batch_size, verbose=1) 
+        result = self.model.fit(X,X, epochs=self.num_epochs, shuffle=True, batch_size=self.batch_size, verbose=0) 
         print('Loss:', result.history['loss'][-1])
 
     def decision_function(self,X): 
