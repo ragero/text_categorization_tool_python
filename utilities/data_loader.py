@@ -29,9 +29,9 @@ def load_arff(path, sparse=True, class_att= 'class_att', label_encoder=False):
         attr_count = 0
         ex_count = 0
         for line in file.readlines(): 
-            line = line.strip()
+            line = line.lower().strip()
             if data == False: 
-                if line.lower().startswith('@attribute'): 
+                if line.startswith('@attribute'): 
                     if line.find(class_att) >= 0: 
                         class_idx = attr_count  
                         class_list = line[line.find('{')+1:line.find('}')].split(',')
@@ -58,6 +58,8 @@ def load_arff(path, sparse=True, class_att= 'class_att', label_encoder=False):
                             parts = attr_value.split(' ')
                             att = int(parts[0])
                             if att == class_idx: 
+                                #if not len(parts) > 1: 
+                                    #print('Aqui!!!')
                                 class_value = parts[1]
                             else: 
                                 example[att] = float(parts[1])
