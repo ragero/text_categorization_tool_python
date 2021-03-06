@@ -58,6 +58,191 @@ config = {
                         "hidden": [
                             {
                                 "type": "Conv1D",
+                                "filters": 50,
+                                "kernel_size": 2,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 50,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 50,
+                                "kernel_size": 3,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 50,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 50,
+                                "kernel_size": 4,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 50,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 50,
+                                "kernel_size": 5,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    
+                    
+                    
+                    {   
+                        "embedding": {
+                            'output_dim': 50,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 2,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 50,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 3,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 50,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 4,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 50,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
                                 "filters": 100,
                                 "kernel_size": 5,
                                 "activation":'relu'
@@ -66,12 +251,801 @@ config = {
                                 "type": "MaxPooling1D",
                                 "pool_size": 3
                             },
+                            {
+                                "type": "Flatten",
+                            },
+
                         ],
                         "output": {
-                            "activation": "softmax"
+                            "activation": "softmax",
+                            "regularizer": 'l2'
                         }
                     },
 
+
+                    {   
+                        "embedding": {
+                            'output_dim': 100,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 2,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 50,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 3,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+
+                    {   
+                        "embedding": {
+                            'output_dim': 50,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 4,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 50,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 5,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+
+                    
+                    {   
+                        "embedding": {
+                            'output_dim': 100,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 50,
+                                "kernel_size": 2,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 100,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 50,
+                                "kernel_size": 3,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 100,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 50,
+                                "kernel_size": 4,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 100,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 50,
+                                "kernel_size": 5,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    
+                    
+                    
+                    {   
+                        "embedding": {
+                            'output_dim': 100,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 2,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 100,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 3,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 100,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 4,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 100,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 5,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+
+
+                    {   
+                        "embedding": {
+                            'output_dim': 100,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 2,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 100,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 3,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+
+                    {   
+                        "embedding": {
+                            'output_dim': 100,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 4,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 100,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 5,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+
+
+                    
+                    {   
+                        "embedding": {
+                            'output_dim': 300,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 50,
+                                "kernel_size": 2,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 300,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 50,
+                                "kernel_size": 3,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 300,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 50,
+                                "kernel_size": 4,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 300,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 50,
+                                "kernel_size": 5,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    
+                    
+                    
+                    {   
+                        "embedding": {
+                            'output_dim': 300,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 2,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 300,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 3,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 300,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 4,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 300,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 5,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+
+
+                    {   
+                        "embedding": {
+                            'output_dim': 300,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 2,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 300,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 3,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+
+                    {   
+                        "embedding": {
+                            'output_dim': 300,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 4,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+                    {   
+                        "embedding": {
+                            'output_dim': 300,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 5,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
+
+                    {   
+                        "embedding": {
+                            'output_dim': 300,
+                            'trainable': True
+                        },
+                        "hidden": [
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 2,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 3
+                            },
+                            {
+                                "type": "Conv1D",
+                                "filters": 100,
+                                "kernel_size": 5,
+                                "activation":'relu'
+                            },
+                            {
+                                "type": "MaxPooling1D",
+                                "pool_size": 2
+                            },
+                            {
+                                "type": "Flatten",
+                            },
+
+                        ],
+                        "output": {
+                            "activation": "softmax",
+                            "regularizer": 'l2'
+                        }
+                    },
 
                 ]
             }
@@ -80,8 +1054,8 @@ config = {
 
 }
 # %%
-"""with open('./configs/config_LSTM.json', 'w') as file:
-    json.dump(config, file, indent=5)"""
+with open('./configs/config_CNN.json', 'w') as file:
+    json.dump(config, file, indent=5)
 
 # %%
 """if __name__ == '__main__': 
