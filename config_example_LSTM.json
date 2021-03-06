@@ -1,0 +1,606 @@
+{
+     "path_dataset": "/media/rafael/DadosCompartilhados/Datasets/Textos em CSVs/CSTR.csv",
+     "loader": {
+          "type": "csv",
+          "text_column": "text_preprocessed",
+          "class_column": "class",
+          "label_encoder": true
+     },
+     "path_results": "/home/rafael/\u00c1rea de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv",
+     "validation": {
+          "number_folds": 10
+     },
+     "algorithms": [
+          {
+               "name": "MyDeepLearning",
+               "parameters": {
+                    "epochs": [
+                         100
+                    ],
+                    "batch_size": [
+                         32
+                    ],
+                    "learning_rate": [
+                         0.001
+                    ],
+                    "layers": [
+                         {
+                              "embedding": {
+                                   "output_dim": 50,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 10,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 50,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 20,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 50,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 50,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 50,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 70,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 50,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 100,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 50,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 20,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 50,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 50,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 50,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 70,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 50,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 100,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 50,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 20,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 50,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 50,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 50,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 70,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 50,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 100,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 100,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 20,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 100,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 50,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 100,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 70,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 100,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 100,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 300,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 20,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 300,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 50,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 300,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 70,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 300,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 100,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 300,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 20,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 300,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 50,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 300,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 70,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         },
+                         {
+                              "embedding": {
+                                   "output_dim": 300,
+                                   "trainable": true
+                              },
+                              "hidden": [
+                                   {
+                                        "type": "LSTM",
+                                        "units": 100,
+                                        "return_sequences": true
+                                   },
+                                   {
+                                        "type": "GlobalMaxPool1D"
+                                   },
+                                   {
+                                        "type": "Dropout",
+                                        "rate": 0.5
+                                   }
+                              ],
+                              "output": {
+                                   "activation": "softmax"
+                              }
+                         }
+                    ]
+               }
+          }
+     ]
+}

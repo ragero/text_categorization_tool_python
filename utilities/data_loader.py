@@ -16,7 +16,10 @@ def load_csv(path, text_column, class_column, label_encoder=False):
     X = df[text_column].to_numpy()
     y = df[class_column].to_numpy()
 
-    y =  np.array(get_label_encoder(y) if label_encoder == True else y, dtype=np.object)
+    if label_encoder == True: 
+        y = np.array(get_label_encoder(y), dtype=np.int)
+    else: 
+        y =  np.array(y)
     return X, y 
 
 def load_arff(path, sparse=True, class_att= 'class_att', label_encoder=False):
@@ -72,7 +75,10 @@ def load_arff(path, sparse=True, class_att= 'class_att', label_encoder=False):
                 ex_count = ex_count + 1
                     
     X = np.array(X, dtype=np.float32)
-    y =  np.array(get_label_encoder(y) if label_encoder == True else y, dtype=np.object)
+    if label_encoder == True: 
+        y = np.array(get_label_encoder(y), dtype=np.int)
+    else: 
+        y =  np.array(y)
     
     return X, y
 

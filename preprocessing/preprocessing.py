@@ -3,6 +3,7 @@
 # Preprocessing Algorithms
 
 from sklearn.feature_extraction.text import TfidfVectorizer
+from .PadSequences import PadSequencer
 
 from os import path
 import sys
@@ -16,3 +17,4 @@ preprocessors = {}
 preprocessors['TfidfVectorizer'] = TfidfVectorizer
 preprocessors['NormStandardization'] = NormStandardization
 preprocessors['SumStandardization'] = SumStandardization
+preprocessors['PadSequencer'] = PadSequencer

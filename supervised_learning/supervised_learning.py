@@ -1,8 +1,7 @@
 # %% [markdown]
 # # Libaries
 
-# Utilitier
-import time
+# Utilities
 import time
 import pandas as pd
 import numpy as np
@@ -15,10 +14,6 @@ from preprocessing.preprocessing import preprocessors
 from utilities.log_error import log_error
 
 
-# Algorithm
-from sklearn import svm
-from sklearn.naive_bayes import MultinomialNB
-import os
 
 # Evaluation
 from sklearn.metrics import accuracy_score
@@ -39,7 +34,7 @@ SEED = 42
 # # Functions
 
 # %%
-def get_evaluation_metrics(classifier, X_test, y_test, fold_number, model_building_time):
+def get_evaluation_metrics(classifier, X_test, y_test, iteration, model_building_time):
 
   evaluation = {}
   start_time_classification = time.time()
@@ -49,7 +44,7 @@ def get_evaluation_metrics(classifier, X_test, y_test, fold_number, model_buildi
 
   evaluation['Algorithm'] = classifier.__class__.__name__
   evaluation['Parameters'] = str(classifier.get_params())
-  evaluation['Fold'] = fold_number
+  evaluation['Iteration'] = iteration
 
   evaluation['Accuracy'] = accuracy_score(y_test, predictions)
 
@@ -74,15 +69,15 @@ def get_evaluation_metrics(classifier, X_test, y_test, fold_number, model_buildi
 
 # %%
 def check_exp(results, classifier, iteration):
-    if len(results[(results['Algorithm'] == classifier.__class__.__name__) & (results['Parameters'] == str(classifier.get_params())) & (results['Fold'] == iteration)]) > 0:
+    if len(results[(results['Algorithm'] == classifier.__class__.__name__) & (results['Parameters'] == str(classifier.get_params())) & (results['Iteration'] == iteration)]) > 0:
         return False
     else:
         return True
 
 # %%
-def process_result(current_results, path_results, classifier, X_test, y_test, fold,model_building_time):
+def process_result(current_results, path_results, classifier, X_test, y_test, iteration,model_building_time):
     
-    result = get_evaluation_metrics(classifier, X_test, y_test, fold, model_building_time)
+    result = get_evaluation_metrics(classifier, X_test, y_test, iteration, model_building_time)
     print(result, '\n')
     current_results = current_results.append(result, ignore_index=True)
     current_results.to_csv(path_results, index=False)
@@ -138,7 +133,7 @@ def get_dataframe(path_results):
     results = pd.DataFrame(columns=[
       'Algorithm',
       'Parameters',
-      'Fold',
+      'Iteration',
       'Accuracy',
       'Macro_Precision',
       'Macro_Recall',
