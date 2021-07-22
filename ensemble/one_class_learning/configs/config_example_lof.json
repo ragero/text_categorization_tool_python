@@ -1,0 +1,55 @@
+{
+   "path_dataset": "/media/rafael/DadosCompartilhados/Representacoes/Sequence_of_words_CSV/tr11.mat.csv",
+   "loader": {
+      "type": "csv",
+      "text_column": "Text",
+      "class_column": "Class"
+   },
+   "path_results": "/home/rafael/\u00c1rea de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv",
+   "validation": {
+      "number_trials": 10,
+      "number_labeled_examples": [
+         1,
+         5,
+         10,
+         20,
+         30
+      ],
+      "split_type": "random"
+   },
+   "preprocessing": [
+      {
+         "method": "TfidfVectorizer",
+         "parameters": {
+            "min_df": 2
+         }
+      },
+      {
+         "method": "NormStandardization"
+      }
+   ],
+   "algorithms": [
+      {
+         "name": "LocalOutlierFactor",
+         "parameters": {
+            "n_neighbors": [
+               1,
+               5,
+               9,
+               13,
+               17,
+               21
+            ],
+            "metric": [
+               "cosine"
+            ],
+            "novelty": [
+               true
+            ],
+            "n_jobs": [
+               4
+            ]
+         }
+      }
+   ]
+}

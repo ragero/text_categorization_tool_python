@@ -215,6 +215,8 @@ def one_class_learning(X, y, classifier, thresholds, preprocessing_pipeline=[], 
                 
                 start_time_building = time.time()
                 classifier.fit(X_train)
+
+
                 elapsed_time_building = (
                 time.time() - start_time_building) / 1000
                 if thresholds != None:

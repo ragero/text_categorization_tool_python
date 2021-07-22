@@ -1,5 +1,5 @@
 {
-   "path_dataset": "/media/rafael/DadosCompartilhados/Representacoes/Sequence_of_words_CSV/tr11.mat.csv",
+   "path_dataset": "/media/rafael/DadosCompartilhados/Representacoes/Sequence_of_words_CSV/CSTR.csv",
    "loader": {
       "type": "csv",
       "text_column": "Text",
