@@ -43,7 +43,7 @@ dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
 # %% [markdown]
 # # Test Área
 #%% 
-config = {
+"""config = {
    "path_dataset": "/media/rafael/DadosCompartilhados/Representacoes/Sequence_of_words_CSV/tr11.mat.csv",
    "loader": {
       "type": "csv",
@@ -78,8 +78,9 @@ config = {
          "name": "LocalOutlierFactor",
          "parameters": {
             "n_neighbors": [
-               5,
+               3,
                7,
+               11,
             ],
             "metric": [
                "cosine"
@@ -96,6 +97,7 @@ config = {
          "name": "OneClassSVM",
          "parameters": {
             "nu": [
+               0.05,
                0.5,
                0.95
             ],
@@ -144,14 +146,14 @@ config = {
          }
       }
    ]
-}
+}"""
 
 # %%
 
 
 # %%
-with open('./configs/config_example_linear_dense_autoencoder_arff_sparse.json','w') as file:
-   json.dump(config, file, indent=3)
+"""with open('./configs/config_example_ensemble.json','w') as file:
+   json.dump(config, file, indent=3)"""
 
 
 # %%
