@@ -321,11 +321,11 @@ def execute_exp(X, y, classifiers, config):
                 parameters_method) if parameters_method != None else preprocessing_method())
 
     for nle in number_labeled_examples:
-        one_class_learning(X, y, classifiers, thresholds, preprocessing_pipeline, path_results,split_type=split_type, number_trials=number_trials, number_examples=nle)
-        # try:
-        #     one_class_learning(X, y, classifiers, thresholds, preprocessing_pipeline, path_results,split_type=split_type, number_trials=number_trials, number_examples=nle)
-        # except Exception as Erro:
-        #     log_error('error.log',str(Erro))
+        #one_class_learning(X, y, classifiers, thresholds, preprocessing_pipeline, path_results,split_type=split_type, number_trials=number_trials, number_examples=nle)
+        try:
+            one_class_learning(X, y, classifiers, thresholds, preprocessing_pipeline, path_results,split_type=split_type, number_trials=number_trials, number_examples=nle)
+        except Exception as Erro:
+            log_error('error.log',str(Erro))
 
     print('Done')
 
