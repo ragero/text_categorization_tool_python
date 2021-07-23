@@ -43,7 +43,7 @@ dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
 # %% [markdown]
 # # Test Área
 #%% 
-"""config = {
+config = {
    "path_dataset": "/media/rafael/DadosCompartilhados/Representacoes/Sequence_of_words_CSV/tr11.mat.csv",
    "loader": {
       "type": "csv",
@@ -54,6 +54,9 @@ dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
    "validation": {
       "number_trials": 10,
       "number_labeled_examples": [
+         1,
+         5,
+         10,
          20,
          30
       ],
@@ -75,8 +78,8 @@ dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
          "name": "LocalOutlierFactor",
          "parameters": {
             "n_neighbors": [
-               1,
                5,
+               7,
             ],
             "metric": [
                "cosine"
@@ -109,30 +112,46 @@ dict_algorithms['DenseAutoencoder'] = DenseAutoencoder
             ]
          }
       },
-      # {
-      #    "name": "IsolationForest",
-      #    "parameters": {
-      #       "n_estimators": [
-      #          10,
-      #          30,
-      #       ],
-      #       "n_jobs": [
-      #          4
-      #       ],
-      #       "random_state": [
-      #          42
-      #       ]
-      #    }
-      # }
+      {
+         "name": "IsolationForest",
+         "parameters": {
+            "n_estimators": [
+               10,
+               30,
+            ],
+            "n_jobs": [
+               4
+            ],
+            "random_state": [
+               42
+            ]
+         }
+      },
+      {
+         "name": "EllipticEnvelope",
+         "parameters": {
+            "assume_centered": [
+               True,
+               False
+            ],
+            "contamination": [
+               0.1,
+               0.2,
+            ],
+            "random_state": [
+               42
+            ]
+         }
+      }
    ]
-}"""
+}
 
 # %%
 
 
 # %%
-"""with open('./configs/config_example_linear_dense_autoencoder_arff_sparse.json','w') as file:
-   json.dump(config, file, indent=3)"""
+with open('./configs/config_example_linear_dense_autoencoder_arff_sparse.json','w') as file:
+   json.dump(config, file, indent=3)
 
 
 # %%

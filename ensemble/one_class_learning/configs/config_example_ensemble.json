@@ -1,0 +1,104 @@
+{
+   "path_dataset": "/media/rafael/DadosCompartilhados/Representacoes/Sequence_of_words_CSV/tr11.mat.csv",
+   "loader": {
+      "type": "csv",
+      "text_column": "Text",
+      "class_column": "Class"
+   },
+   "path_results": "/home/rafael/\u00c1rea de Trabalho/Projetos/TextCategorizationToolPython/saida/resultados_teste.csv",
+   "validation": {
+      "number_trials": 10,
+      "number_labeled_examples": [
+         1,
+         5,
+         10,
+         20,
+         30
+      ],
+      "split_type": "random"
+   },
+   "preprocessing": [
+      {
+         "method": "TfidfVectorizer",
+         "parameters": {
+            "min_df": 2
+         }
+      },
+      {
+         "method": "NormStandardization"
+      }
+   ],
+   "algorithms": [
+      {
+         "name": "LocalOutlierFactor",
+         "parameters": {
+            "n_neighbors": [
+               3,
+               7,
+               11
+            ],
+            "metric": [
+               "cosine"
+            ],
+            "novelty": [
+               true
+            ],
+            "n_jobs": [
+               4
+            ]
+         }
+      },
+      {
+         "name": "OneClassSVM",
+         "parameters": {
+            "nu": [
+               0.05,
+               0.5,
+               0.95
+            ],
+            "gamma": [
+               "scale",
+               "auto"
+            ],
+            "kernel": [
+               "linear",
+               "rbf"
+            ],
+            "max_iter": [
+               100
+            ]
+         }
+      },
+      {
+         "name": "IsolationForest",
+         "parameters": {
+            "n_estimators": [
+               10,
+               30
+            ],
+            "n_jobs": [
+               4
+            ],
+            "random_state": [
+               42
+            ]
+         }
+      },
+      {
+         "name": "EllipticEnvelope",
+         "parameters": {
+            "assume_centered": [
+               true,
+               false
+            ],
+            "contamination": [
+               0.1,
+               0.2
+            ],
+            "random_state": [
+               42
+            ]
+         }
+      }
+   ]
+}
